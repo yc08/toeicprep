@@ -24,13 +24,15 @@ button { font: inherit; }
 
 .app-shell { width: min(1080px, calc(100% - 40px)); margin: 0 auto; padding: 28px 0 44px; }
 .topbar, .stats, .quiz-card-top { display: flex; align-items: center; justify-content: space-between; }
-.topbar { padding-bottom: 56px; }
+.topbar { padding-bottom: 22px; }
+.profile-actions { display: flex; align-items: center; gap: 8px; }
 .brand { color: var(--ink); font-size: 14px; font-weight: 800; letter-spacing: .08em; text-decoration: none; }
 .brand span { color: var(--mint-deep); font-weight: 500; }
 .topbar-meta { color: var(--muted); font-family: "DM Mono", monospace; font-size: 11px; text-transform: uppercase; letter-spacing: .07em; }
 .profile-button { padding: 8px 12px; border: 1px solid var(--line); background: var(--card); color: var(--ink); cursor: pointer; font-size: 12px; font-weight: 700; }
+.logout-button { padding: 8px 0; border: 0; background: transparent; color: var(--muted); cursor: pointer; font-size: 12px; }
 .live-dot { display: inline-block; width: 7px; height: 7px; margin-right: 8px; border-radius: 50%; background: var(--coral); box-shadow: 0 0 0 5px rgba(223, 115, 95, .14); }
-.hero { display: flex; align-items: end; justify-content: space-between; gap: 30px; padding-bottom: 46px; }
+.hero { display: none; }
 .eyebrow, .stat-label, .question-number, .progress-label { color: var(--mint-deep); font-family: "DM Mono", monospace; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; }
 .eyebrow { margin: 0 0 16px; }
 h1 { max-width: 720px; margin: 0; font-size: clamp(38px, 6vw, 72px); line-height: .98; letter-spacing: -.055em; }
@@ -43,6 +45,8 @@ h1 em { color: var(--mint-deep); font-style: normal; }
 .reset-button span { margin-left: 5px; color: var(--mint-deep); font-size: 18px; }
 .tools { display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 18px; }
 .tool-button { padding: 10px 14px; border: 1px solid var(--line); background: transparent; color: var(--muted); cursor: pointer; font-size: 12px; font-weight: 700; text-decoration: none; }
+.toggle-tool { display: inline-flex; align-items: center; gap: 8px; }
+.toggle-tool input { accent-color: var(--mint-deep); }
 .tool-button:hover { border-color: var(--mint-deep); color: var(--mint-deep); }
 .tool-button span { color: var(--mint-deep); }
 .quiz-card { min-height: 485px; padding: 28px clamp(24px, 6vw, 72px) 46px; border: 1px solid var(--line); background: var(--card); box-shadow: var(--shadow); }
@@ -94,7 +98,7 @@ h1 em { color: var(--mint-deep); font-style: normal; }
 
 @media (max-width: 700px) {
   .app-shell { width: min(100% - 28px, 1080px); padding-top: 20px; }
-  .topbar { padding-bottom: 42px; }
+  .topbar { padding-bottom: 18px; }
   .topbar-meta { font-size: 9px; }
   .profile-button { font-size: 10px; }
   .hero { display: block; padding-bottom: 32px; }

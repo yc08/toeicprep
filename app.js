@@ -8,9 +8,12 @@ const state = {
   locked: false,
   name: "",
   wrong: [],
+  autoNext: localStorage.getItem("toeic-quickfire-auto-next") === "true",
 };
 
 const profilePrefix = "toeic-quickfire-profile:";
+const lastProfileKey = "toeic-quickfire-last-profile";
+let nextTimer;
 
 const content = document.querySelector("#quiz-content");
 const score = document.querySelector("#score");
@@ -34,6 +37,7 @@ function profileKey(name = state.name) {
 
 function saveProfile() {
   if (!state.name) return;
+  localStorage.setItem(lastProfileKey, state.name);
   localStorage.setItem(profileKey(), JSON.stringify({
     name: state.name,
     answered: state.answered,
@@ -48,6 +52,7 @@ function loadProfile(name) {
   state.answered = Number(saved?.answered) || 0;
   state.correct = Number(saved?.correct) || 0;
   state.wrong = Array.isArray(saved?.wrong) ? saved.wrong : [];
+  state.streak = 0;
   profileName.textContent = state.name;
   profileButton.textContent = state.name;
   updateStats();
@@ -107,6 +112,7 @@ function renderReview() {
 }
 
 function renderQuestion() {
+  clearTimeout(nextTimer);
   if (!state.remaining.length) {
     state.remaining = shuffle(state.questions);
   }
@@ -139,11 +145,12 @@ function submitAnswer(button) {
   const isCorrect = selected.toLowerCase() === state.current.answer.toLowerCase();
   if (isCorrect) {
     state.correct += 1;
+    state.wrong = state.wrong.filter((item) => item.id !== state.current.id);
+    state.streak += 1;
+  } else {
     if (!state.wrong.some((item) => item.id === state.current.id)) {
       state.wrong.push({ id: state.current.id, question: state.current.question, answer: state.current.answer });
     }
-    state.streak += 1;
-  } else {
     state.streak = 0;
   }
 
@@ -164,6 +171,7 @@ function submitAnswer(button) {
   `;
   content.append(feedback);
   feedback.querySelector(".next-button").addEventListener("click", renderQuestion);
+  if (state.autoNext) nextTimer = setTimeout(renderQuestion, 1000);
   updateStats();
   saveProfile();
   renderReview();
@@ -222,6 +230,7 @@ async function loadQuestions() {
 }
 
 document.querySelector("#reset-button").addEventListener("click", () => {
+  clearTimeout(nextTimer);
   state.remaining = shuffle(state.questions);
   state.answered = 0;
   state.correct = 0;
@@ -241,6 +250,20 @@ document.querySelector("#profile-form").addEventListener("submit", (event) => {
   profileDialog.hidden = true;
 });
 profileButton.addEventListener("click", openProfileDialog);
+document.querySelector("#logout-button").addEventListener("click", () => {
+  clearTimeout(nextTimer);
+  state.name = "";
+  state.answered = 0;
+  state.correct = 0;
+  state.streak = 0;
+  state.wrong = [];
+  localStorage.removeItem(lastProfileKey);
+  profileName.textContent = "Guest";
+  profileButton.textContent = "Profile";
+  updateStats();
+  renderReview();
+  openProfileDialog();
+});
 document.querySelector("#review-button").addEventListener("click", () => {
   reviewPanel.hidden = false;
   reviewPanel.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -251,8 +274,15 @@ document.querySelector("#import-input").addEventListener("change", (event) => {
   if (event.target.files[0]) importProgress(event.target.files[0]);
   event.target.value = "";
 });
+document.querySelector("#auto-next-input").checked = state.autoNext;
+document.querySelector("#auto-next-input").addEventListener("change", (event) => {
+  state.autoNext = event.target.checked;
+  localStorage.setItem("toeic-quickfire-auto-next", String(state.autoNext));
+});
 
 if ("serviceWorker" in navigator) navigator.serviceWorker.register("./sw.js").catch(console.error);
 
 loadQuestions();
-openProfileDialog();
+const lastProfile = localStorage.getItem(lastProfileKey);
+if (lastProfile) loadProfile(lastProfile);
+else openProfileDialog();

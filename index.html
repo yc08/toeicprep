@@ -18,16 +18,11 @@
         <span class="live-dot"></span>
         <span id="question-count">Loading question bank...</span>
       </div>
-      <button class="profile-button" id="profile-button" type="button" aria-label="Change profile">Profile</button>
-    </header>
-
-    <section class="hero">
-      <div>
-        <p class="eyebrow">Part 5 / random practice</p>
-        <h1>Sharpen your grammar,<br /><em>one question at a time.</em></h1>
+      <div class="profile-actions">
+        <button class="profile-button" id="profile-button" type="button" aria-label="Change profile">Profile</button>
+        <button class="logout-button" id="logout-button" type="button">Log out</button>
       </div>
-      <p class="hero-note">Fast rounds. Clear feedback.<br />A little momentum goes a long way.</p>
-    </section>
+    </header>
 
     <section class="stats" aria-label="Quiz statistics">
       <div class="stat"><span class="stat-label">Score</span><strong id="score">0%</strong></div>
@@ -38,6 +33,10 @@
 
     <section class="tools" aria-label="Progress tools">
       <button class="tool-button" id="review-button" type="button">Review wrong <span id="wrong-count">0</span></button>
+      <label class="tool-button toggle-tool" for="auto-next-input">
+        <input id="auto-next-input" type="checkbox" />
+        <span>Auto-next after 1 sec</span>
+      </label>
       <button class="tool-button" id="export-button" type="button">Export progress <span aria-hidden="true">↓</span></button>
       <label class="tool-button" for="import-input">Import progress <span aria-hidden="true">↑</span></label>
       <input id="import-input" type="file" accept="application/json" hidden />
