@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TOEIC Quickfire</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="manifest" href="manifest.webmanifest" />
+</head>
+<body>
+  <main class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="./">TOEIC <span>QUICKFIRE</span></a>
+      <div class="topbar-meta">
+        <span class="live-dot"></span>
+        <span id="question-count">Loading question bank...</span>
+      </div>
+      <button class="profile-button" id="profile-button" type="button" aria-label="Change profile">Profile</button>
+    </header>
+
+    <section class="hero">
+      <div>
+        <p class="eyebrow">Part 5 / random practice</p>
+        <h1>Sharpen your grammar,<br /><em>one question at a time.</em></h1>
+      </div>
+      <p class="hero-note">Fast rounds. Clear feedback.<br />A little momentum goes a long way.</p>
+    </section>
+
+    <section class="stats" aria-label="Quiz statistics">
+      <div class="stat"><span class="stat-label">Score</span><strong id="score">0%</strong></div>
+      <div class="stat"><span class="stat-label">Correct</span><strong id="correct">0 / 0</strong></div>
+      <div class="stat"><span class="stat-label">Streak</span><strong id="streak">0</strong></div>
+      <button class="reset-button" id="reset-button" type="button">Reset session <span aria-hidden="true">↻</span></button>
+    </section>
+
+    <section class="tools" aria-label="Progress tools">
+      <button class="tool-button" id="review-button" type="button">Review wrong <span id="wrong-count">0</span></button>
+      <button class="tool-button" id="export-button" type="button">Export progress <span aria-hidden="true">↓</span></button>
+      <label class="tool-button" for="import-input">Import progress <span aria-hidden="true">↑</span></label>
+      <input id="import-input" type="file" accept="application/json" hidden />
+    </section>
+
+    <section class="quiz-card" aria-live="polite">
+      <div class="quiz-card-top">
+        <span class="question-number" id="question-number">QUESTION 01</span>
+        <span class="progress-label" id="progress-label">0 answered</span>
+      </div>
+      <div class="progress-track"><span id="progress-bar"></span></div>
+
+      <div id="quiz-content" class="quiz-content">
+        <div class="loading-state">Preparing your question bank<span class="loading-dots">...</span></div>
+      </div>
+    </section>
+
+    <section class="review-panel" id="review-panel" hidden>
+      <div class="review-heading">
+        <div>
+          <p class="eyebrow">Your review queue</p>
+          <h2>Wrong answers to revisit</h2>
+        </div>
+        <button class="close-button" id="close-review" type="button" aria-label="Close review">×</button>
+      </div>
+      <div id="review-list" class="review-list"></div>
+    </section>
+
+    <footer class="footer-note">Signed in as <strong id="profile-name">Guest</strong>. Name-only profiles stay on this device.</footer>
+  </main>
+    <div class="profile-dialog" id="profile-dialog" hidden>
+      <form class="profile-form" id="profile-form">
+        <p class="eyebrow">Local profile</p>
+        <h2>Who is practicing?</h2>
+        <p class="dialog-note">Use a unique name. No password or email is needed.</p>
+        <input id="name-input" name="name" maxlength="24" autocomplete="nickname" placeholder="Your name" required />
+        <button class="next-button" type="submit">Continue <span aria-hidden="true">→</span></button>
+      </form>
+    </div>
+  <script src="app.js"></script>
+</body>
+</html>

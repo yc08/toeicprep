@@ -1,0 +1,9 @@
+{
+  "name": "TOEIC Quickfire",
+  "short_name": "TOEIC Quickfire",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f4f1e9",
+  "theme_color": "#23785c",
+  "icons": []
+}
